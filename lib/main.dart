@@ -589,6 +589,14 @@ class _NexusHomePageState extends State<NexusHomePage> {
     );
   }
 
+  void logout() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -748,6 +756,11 @@ class _NexusHomePageState extends State<NexusHomePage> {
           _iconButton(
             Icons.person_outline_rounded,
             () => openComingSoon('Profile'),
+          ),
+          const SizedBox(width: 5),
+          _iconButton(
+            Icons.logout_rounded,
+            logout,
           ),
         ],
       ),
