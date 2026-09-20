@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -588,7 +589,14 @@ class _NexusHomePageState extends State<NexusHomePage> {
       ),
     );
   }
-
+  void openAboutMe() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const AboutMePage(),
+    ),
+  );
+}
   void logout() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -741,6 +749,7 @@ class _NexusHomePageState extends State<NexusHomePage> {
             _topAction(Icons.explore_rounded, 'QUEST', false),
             _topAction(Icons.person_rounded, 'CHARACTER', false),
             _topAction(Icons.emoji_events_rounded, 'ACHIEVEMENT', false),
+            _topAction(Icons.info_outline_rounded, 'ABOUT ME', false),
           ],
           const SizedBox(width: 6),
           _iconButton(
@@ -771,7 +780,9 @@ class _NexusHomePageState extends State<NexusHomePage> {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        if (!active) {
+        if (label == 'ABOUT ME') {
+          openAboutMe();
+        } else if (!active) {
           openComingSoon(label);
         }
       },
@@ -1207,11 +1218,10 @@ class _NexusHomePageState extends State<NexusHomePage> {
           ),
           SizedBox(
             height: 235,
-            child: ListView.separated(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: quests.length,
               padding: const EdgeInsets.only(right: 4),
-              separatorBuilder: (_, __) => const SizedBox(width: 13),
               itemBuilder: (_, index) => SizedBox(
                 width: 275,
                 child: _questCard(quests[index], index),
@@ -1222,11 +1232,10 @@ class _NexusHomePageState extends State<NexusHomePage> {
       );
     }
 
-    return ListView.separated(
+    return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: quests.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 11),
       itemBuilder: (_, index) => _questCard(quests[index], index),
     );
   }
@@ -1472,6 +1481,7 @@ class _NexusHomePageState extends State<NexusHomePage> {
       (Icons.explore_rounded, 'Quest'),
       (Icons.person_rounded, 'Character'),
       (Icons.emoji_events_rounded, 'Rewards'),
+      (Icons.info_outline_rounded, 'About Me'),
     ];
 
     return Container(
@@ -1491,10 +1501,13 @@ class _NexusHomePageState extends State<NexusHomePage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(13),
               onTap: () {
-                setState(() => selectedNav = index);
-                if (index != 0) {
-                  openComingSoon(item.$2);
-                }
+              setState(() => selectedNav = index);
+
+              if (item.$2 == 'About Me') {
+              openAboutMe();
+              } else if (index != 0) {
+              openComingSoon(item.$2);
+              }
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 9),
@@ -1555,4 +1568,1123 @@ class _StatData {
   final IconData icon;
 
   const _StatData(this.name, this.value, this.icon);
+}
+
+class AboutMePage extends StatelessWidget {
+  const AboutMePage({super.key});
+
+  // =========================
+  // GUILD LICENSE PALETTE
+  // =========================
+  static const Color ink = Color(0xFF18243D);
+  static const Color inkSoft = Color(0xFF30394B);
+  static const Color parchment = Color(0xFFE8D4A9);
+  static const Color parchmentLight = Color(0xFFF1E3C4);
+  static const Color parchmentDark = Color(0xFFD0B681);
+  static const Color brown = Color(0xFF68441F);
+  static const Color gold = Color(0xFFA97832);
+  static const Color navy = Color(0xFF101722);
+  static const Color navy2 = Color(0xFF182235);
+  static const Color wax = Color(0xFF76252A);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: navy,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _licenseHeader(context),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final bool wide = constraints.maxWidth >= 950;
+
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(
+                      wide ? 16 : 8,
+                      8,
+                      wide ? 16 : 8,
+                      24,
+                    ),
+                    child: _licenseDesk(wide),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // TOP HEADER — DARK TABLE / ADVENTURER PAGE HEADER
+  // ============================================================
+  Widget _licenseHeader(BuildContext context) {
+    final bool wide = MediaQuery.sizeOf(context).width >= 800;
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(wide ? 20 : 8, 8, wide ? 20 : 8, 8),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF0D1119), Color(0xFF171D2A)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border(
+          bottom: BorderSide(color: Color(0xFF4D3B27)),
+        ),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 31,
+            ),
+          ),
+          const SizedBox(width: 5),
+          Container(
+            width: wide ? 52 : 44,
+            height: wide ? 52 : 44,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0x332C3A52),
+              border: Border.all(
+                color: const Color(0x665E6E88),
+              ),
+            ),
+            child: const Icon(
+              Icons.explore_rounded,
+              color: Colors.white70,
+              size: 27,
+            ),
+          ),
+          const SizedBox(width: 12),
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'About Me',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: 'Georgia',
+                ),
+              ),
+              SizedBox(height: 2),
+              Text(
+                'Adventurer Guild License',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          if (wide)
+            const Text(
+              '“Small progress still counts as progress.”',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+                fontFamily: 'Georgia',
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // OUTER DESK / LEATHER FRAME
+  // ============================================================
+  Widget _licenseDesk(bool wide) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1500),
+        child: Container(
+          padding: EdgeInsets.all(wide ? 13 : 6),
+          decoration: BoxDecoration(
+            color: const Color(0xFF1C1A1C),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: const Color(0xFF654A2B),
+              width: 3,
+            ),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black87,
+                blurRadius: 35,
+                offset: Offset(0, 20),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              // Dark "desk" decorations.
+              Positioned(
+                left: 5,
+                top: 35,
+                child: _deskCompass(),
+              ),
+              Positioned(
+                right: 7,
+                bottom: 30,
+                child: _deskMedallion(),
+              ),
+              Positioned(
+                left: 4,
+                bottom: 4,
+                child: _deskFlower(),
+              ),
+
+              // Main parchment license.
+              Container(
+                decoration: BoxDecoration(
+                  color: parchment,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: gold,
+                    width: 3,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black54,
+                      blurRadius: 18,
+                      offset: Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: _parchment(wide),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // MAIN PARCHMENT
+  // ============================================================
+  Widget _parchment(bool wide) {
+    return Stack(
+      children: [
+        // Very subtle NEXUS watermark.
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: 0.055,
+              child: Image.asset(
+                'assets/nexus_world.png',
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+        ),
+
+        // Decorative map/castle illustration on right.
+        Positioned(
+          right: 12,
+          top: 90,
+          bottom: 80,
+          width: wide ? 360 : 150,
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: 0.075,
+              child: Icon(
+                Icons.castle_rounded,
+                size: 280,
+                color: brown,
+              ),
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+            wide ? 26 : 14,
+            wide ? 20 : 14,
+            wide ? 26 : 14,
+            wide ? 18 : 14,
+          ),
+          child: Column(
+            children: [
+              _ornateCorners(),
+              _guildHeader(wide),
+              const SizedBox(height: 12),
+              _goldDivider(),
+              const SizedBox(height: 18),
+
+              // Identity + portrait.
+              _identitySection(wide),
+
+              const SizedBox(height: 18),
+
+              // About + interests.
+              _profileSection(wide),
+
+              const SizedBox(height: 18),
+
+              // Motto.
+              _motto(wide),
+
+              const SizedBox(height: 16),
+
+              // Signature + wax seal.
+              _signatureRow(wide),
+
+              const SizedBox(height: 12),
+              _footerMark(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // CORNER ORNAMENTS
+  // ============================================================
+  Widget _ornateCorners() {
+    return const Positioned.fill(
+      child: IgnorePointer(
+        child: CustomPaint(
+          painter: _GuildCornerPainter(),
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // GUILD HEADER
+  // ============================================================
+  Widget _guildHeader(bool wide) {
+    final title = const Text(
+      'NEXUS ADVENTURER GUILD',
+      style: TextStyle(
+        color: ink,
+        fontSize: 31,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 1.2,
+        fontFamily: 'Georgia',
+      ),
+    );
+
+    final license = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(width: 72, height: 2, color: brown),
+        const SizedBox(width: 10),
+        const Text(
+          'OFFICIAL LICENSE',
+          style: TextStyle(
+            color: brown,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 3.0,
+            fontFamily: 'Georgia',
+          ),
+        ),
+        const SizedBox(width: 10),
+        Container(width: 72, height: 2, color: brown),
+      ],
+    );
+
+    final heading = wide
+        ? Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _compassSeal(),
+              const SizedBox(width: 18),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    title,
+                    const SizedBox(height: 6),
+                    license,
+                  ],
+                ),
+              ),
+              _idNumber(),
+            ],
+          )
+        : Column(
+            children: [
+              _compassSeal(),
+              const SizedBox(height: 10),
+              FittedBox(child: title),
+              const SizedBox(height: 6),
+              FittedBox(child: license),
+              const SizedBox(height: 10),
+              _idNumber(),
+            ],
+          );
+
+    return heading;
+  }
+
+  Widget _compassSeal() {
+    return Container(
+      width: 76,
+      height: 76,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color(0x19FFFFFF),
+        border: Border.all(
+          color: gold,
+          width: 2.5,
+        ),
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.explore_rounded,
+          color: brown,
+          size: 48,
+        ),
+      ),
+    );
+  }
+
+  Widget _idNumber() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'ID No. 25051204439',
+          style: TextStyle(
+            color: brown,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1,
+            fontFamily: 'Georgia',
+          ),
+        ),
+        SizedBox(height: 5),
+        Text(
+          'ADVENTURER LICENSE\nNEXUS WORLD',
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            color: brown,
+            fontSize: 9,
+            letterSpacing: 1.5,
+            height: 1.4,
+            fontFamily: 'Georgia',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _goldDivider() {
+    return Row(
+      children: [
+        Expanded(child: Container(height: 1.5, color: gold)),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            '✦',
+            style: TextStyle(
+              color: brown,
+              fontSize: 22,
+            ),
+          ),
+        ),
+        Expanded(child: Container(height: 1.5, color: gold)),
+      ],
+    );
+  }
+
+  // ============================================================
+  // IDENTITY SECTION
+  // ============================================================
+  Widget _identitySection(bool wide) {
+    final portrait = _portrait(wide);
+
+    final info = Column(
+      children: [
+        _dataRow(Icons.person_rounded, 'Nama', 'Kelvin', wide),
+        _dataRow(
+          Icons.cake_rounded,
+          'Tempat & Tanggal Lahir',
+          '17 Maret 2006, Madiun',
+          wide,
+        ),
+        _dataRow(Icons.badge_rounded, 'NIM', '25051204439', wide),
+        _dataRow(
+          Icons.school_rounded,
+          'Kelas',
+          'Informatika 2025 H',
+          wide,
+        ),
+      ],
+    );
+
+    if (!wide) {
+      return Column(
+        children: [
+          portrait,
+          const SizedBox(height: 14),
+          info,
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        portrait,
+        const SizedBox(width: 28),
+        Expanded(child: info),
+      ],
+    );
+  }
+
+  Widget _portrait(bool wide) {
+    return Column(
+      children: [
+        Container(
+          width: wide ? 285 : 220,
+          height: wide ? 365 : 290,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: parchmentDark,
+            border: Border.all(
+              color: brown,
+              width: 3,
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  'assets/profile_kelvin.jpeg',
+                  fit: BoxFit.cover,
+                  alignment: const Alignment(0, -0.03),
+                  errorBuilder: (_, __, ___) => const Center(
+                    child: Icon(
+                      Icons.person_rounded,
+                      size: 80,
+                      color: brown,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(
+                    painter: _PhotoOrnamentPainter(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Still Learning,\nStill Exploring.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: brown,
+            fontSize: 17,
+            height: 1.15,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Georgia',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _dataRow(
+    IconData icon,
+    String label,
+    String value,
+    bool wide,
+  ) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: wide ? 12 : 10,
+      ),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0x55765021),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: brown,
+            size: wide ? 23 : 19,
+          ),
+          const SizedBox(width: 12),
+          SizedBox(
+            width: wide ? 250 : 145,
+            child: Text(
+              label.toUpperCase(),
+              style: TextStyle(
+                color: brown,
+                fontSize: wide ? 14 : 11,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.7,
+                fontFamily: 'Georgia',
+              ),
+            ),
+          ),
+          const Text(
+            ':',
+            style: TextStyle(
+              color: brown,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: ink,
+                fontSize: wide ? 18 : 14,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Georgia',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // ABOUT + INTERESTS
+  // ============================================================
+  Widget _profileSection(bool wide) {
+    final about = _paperSection(
+      icon: Icons.auto_stories_rounded,
+      title: 'ABOUT ME',
+      child: const Text(
+        'Seorang mahasiswa yang sedang menjalani perjalanan untuk belajar, '
+        'berkembang, dan mencoba berbagai hal baru. Saya percaya bahwa '
+        'setiap pengalaman, sekecil apa pun, merupakan bagian dari proses '
+        'untuk menjadi versi diri yang lebih baik.',
+        style: TextStyle(
+          color: inkSoft,
+          fontSize: 16,
+          height: 1.48,
+          fontFamily: 'Georgia',
+        ),
+      ),
+    );
+
+    final interests = _paperSection(
+      icon: Icons.auto_awesome_rounded,
+      title: 'INTERESTS',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _interest(Icons.sports_esports_rounded, 'Main Game'),
+          const SizedBox(height: 15),
+          _interest(Icons.two_wheeler_rounded, 'Modifikasi Otomotif'),
+        ],
+      ),
+    );
+
+    if (!wide) {
+      return Column(
+        children: [
+          about,
+          const SizedBox(height: 14),
+          interests,
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(flex: 6, child: about),
+        const SizedBox(width: 18),
+        Expanded(flex: 4, child: interests),
+      ],
+    );
+  }
+
+  Widget _paperSection({
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+      decoration: BoxDecoration(
+        color: const Color(0x12FFFFFF),
+        border: Border.all(
+          color: const Color(0x88765021),
+          width: 1.4,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: brown, size: 28),
+              const SizedBox(width: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: ink,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.7,
+                  fontFamily: 'Georgia',
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(
+                  height: 1.4,
+                  color: const Color(0x88765021),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 13),
+          child,
+        ],
+      ),
+    );
+  }
+
+  Widget _interest(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: ink,
+          size: 39,
+        ),
+        const SizedBox(width: 15),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: inkSoft,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Georgia',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // MOTTO — BIG LICENSE BOX
+  // ============================================================
+  Widget _motto(bool wide) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.fromLTRB(
+        wide ? 24 : 15,
+        wide ? 18 : 14,
+        wide ? 24 : 15,
+        wide ? 18 : 14,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0x12FFFFFF),
+        border: Border.all(
+          color: const Color(0x99765021),
+          width: 1.8,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.explore_rounded,
+            color: brown,
+            size: 48,
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "ADVENTURER'S MOTTO",
+                      style: TextStyle(
+                        color: ink,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.8,
+                        fontFamily: 'Georgia',
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        height: 1.4,
+                        color: const Color(0x88765021),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 9),
+                const Text(
+                  '"Aku mungkin belum menjadi versi terbaik dari diriku, '
+                  'tapi aku bangga karena aku terus mencoba menjadi sedikit '
+                  'lebih baik dari kemarin."',
+                  style: TextStyle(
+                    color: inkSoft,
+                    fontSize: 15,
+                    height: 1.5,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'Georgia',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // SIGNATURE + WAX SEAL
+  // ============================================================
+  Widget _signatureRow(bool wide) {
+    if (!wide) {
+      return Column(
+        children: [
+          _signature(),
+          const SizedBox(height: 14),
+          _waxSeal(),
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Expanded(
+          child: Text(
+            'NEXUS WORLD  •  OFFICIAL ADVENTURER RECORD',
+            style: TextStyle(
+              color: brown,
+              fontSize: 9,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.5,
+              fontFamily: 'Georgia',
+            ),
+          ),
+        ),
+        _signature(),
+        const SizedBox(width: 25),
+        _waxSeal(),
+      ],
+    );
+  }
+
+  Widget _signature() {
+    return Column(
+      children: [
+        const Text(
+          'KELVIN',
+          style: TextStyle(
+            color: ink,
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Georgia',
+          ),
+        ),
+        Container(
+          width: 155,
+          height: 1.5,
+          color: brown,
+        ),
+        const SizedBox(height: 4),
+        const Text(
+          'SIGNATURE',
+          style: TextStyle(
+            color: brown,
+            fontSize: 9,
+            letterSpacing: 2.5,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _waxSeal() {
+    return Container(
+      width: 82,
+      height: 82,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: wax,
+        border: Border.all(
+          color: const Color(0xFF9A4A45),
+          width: 4,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 10,
+            offset: Offset(3, 5),
+          ),
+        ],
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.explore_rounded,
+          color: Color(0xFFE0B46B),
+          size: 42,
+        ),
+      ),
+    );
+  }
+
+  Widget _footerMark() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(width: 65, height: 1, color: gold),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            '✦  SAME STEPS  •  BRIGHTER DAYS  ✦',
+            style: TextStyle(
+              color: brown,
+              fontSize: 8,
+              letterSpacing: 2.1,
+              fontFamily: 'Georgia',
+            ),
+          ),
+        ),
+        Container(width: 65, height: 1, color: gold),
+      ],
+    );
+  }
+
+  // ============================================================
+  // BACKGROUND DECORATIONS
+  // ============================================================
+  Widget _deskCompass() {
+    return Opacity(
+      opacity: 0.5,
+      child: Container(
+        width: 170,
+        height: 250,
+        decoration: BoxDecoration(
+          color: const Color(0x221B2638),
+          borderRadius: BorderRadius.circular(70),
+          border: Border.all(
+            color: const Color(0x334C5A6E),
+          ),
+        ),
+        child: const Center(
+          child: Icon(
+            Icons.explore_rounded,
+            color: Color(0x775B6A7D),
+            size: 115,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _deskMedallion() {
+    return Container(
+      width: 120,
+      height: 120,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color(0xFF202837),
+        border: Border.all(
+          color: const Color(0xFF71572F),
+          width: 3,
+        ),
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.shield_rounded,
+          color: Color(0xFF92703C),
+          size: 62,
+        ),
+      ),
+    );
+  }
+
+  Widget _deskFlower() {
+    return SizedBox(
+      width: 130,
+      height: 95,
+      child: CustomPaint(
+        painter: _FlowerPainter(),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ORNAMENT PAINTERS
+// ============================================================
+
+class _GuildCornerPainter extends CustomPainter {
+  const _GuildCornerPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = const Color(0x886F4C25)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+
+    void corner(double x, double y, bool flipX, bool flipY) {
+      canvas.save();
+      canvas.translate(x, y);
+      canvas.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+      final path = Path()
+        ..moveTo(0, 38)
+        ..lineTo(0, 0)
+        ..lineTo(38, 0)
+        ..moveTo(7, 27)
+        ..lineTo(7, 7)
+        ..lineTo(27, 7)
+        ..moveTo(13, 19)
+        ..lineTo(13, 13)
+        ..lineTo(19, 13);
+
+      canvas.drawPath(path, p);
+      canvas.drawCircle(const Offset(5, 5), 2.5, p);
+      canvas.restore();
+    }
+
+    corner(5, 5, false, false);
+    corner(size.width - 5, 5, true, false);
+    corner(5, size.height - 5, false, true);
+    corner(size.width - 5, size.height - 5, true, true);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _PhotoOrnamentPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = const Color(0xFFB7893F)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.7;
+
+    const d = 30.0;
+
+    final topLeft = Path()
+      ..moveTo(0, d)
+      ..lineTo(0, 0)
+      ..lineTo(d, 0)
+      ..moveTo(7, 22)
+      ..lineTo(7, 7)
+      ..lineTo(22, 7);
+
+    final topRight = Path()
+      ..moveTo(size.width, d)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width - d, 0)
+      ..moveTo(size.width - 7, 22)
+      ..lineTo(size.width - 7, 7)
+      ..lineTo(size.width - 22, 7);
+
+    final bottomLeft = Path()
+      ..moveTo(0, size.height - d)
+      ..lineTo(0, size.height)
+      ..lineTo(d, size.height)
+      ..moveTo(7, size.height - 22)
+      ..lineTo(7, size.height - 7)
+      ..lineTo(22, size.height - 7);
+
+    final bottomRight = Path()
+      ..moveTo(size.width, size.height - d)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width - d, size.height)
+      ..moveTo(size.width - 7, size.height - 22)
+      ..lineTo(size.width - 7, size.height - 7)
+      ..lineTo(size.width - 22, size.height - 7);
+
+    canvas.drawPath(topLeft, p);
+    canvas.drawPath(topRight, p);
+    canvas.drawPath(bottomLeft, p);
+    canvas.drawPath(bottomRight, p);
+
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height),
+      14,
+      p,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _FlowerPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = const Color(0x557A6348)
+      ..style = PaintingStyle.fill;
+
+    final center = Offset(size.width * 0.35, size.height * 0.65);
+
+    for (int i = 0; i < 5; i++) {
+      final angle = i * 1.2566;
+      final petal = Offset(
+        center.dx + 25 * math.cos(angle),
+        center.dy + 25 * math.sin(angle),
+      );
+      canvas.drawCircle(petal, 15, p);
+    }
+
+    canvas.drawCircle(
+      center,
+      12,
+      Paint()..color = const Color(0xFFB08A4B),
+    );
+
+    final stem = Paint()
+      ..color = const Color(0x556F754C)
+      ..strokeWidth = 3;
+
+    canvas.drawLine(
+      Offset(center.dx, center.dy + 8),
+      Offset(center.dx - 12, size.height),
+      stem,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
