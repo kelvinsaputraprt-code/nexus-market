@@ -612,7 +612,7 @@ class _NexusHomePageState extends State<NexusHomePage> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/nexus_world.png',
+            'assets/home_fantasy.png',
             fit: BoxFit.cover,
           ),
           Container(
