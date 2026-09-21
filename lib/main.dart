@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -1573,19 +1572,16 @@ class _StatData {
 class AboutMePage extends StatelessWidget {
   const AboutMePage({super.key});
 
-  // =========================
-  // GUILD LICENSE PALETTE
-  // =========================
-  static const Color ink = Color(0xFF18243D);
-  static const Color inkSoft = Color(0xFF30394B);
-  static const Color parchment = Color(0xFFE8D4A9);
-  static const Color parchmentLight = Color(0xFFF1E3C4);
-  static const Color parchmentDark = Color(0xFFD0B681);
-  static const Color brown = Color(0xFF68441F);
-  static const Color gold = Color(0xFFA97832);
-  static const Color navy = Color(0xFF101722);
-  static const Color navy2 = Color(0xFF182235);
-  static const Color wax = Color(0xFF76252A);
+  static const Color navy = Color(0xFF0D1422);
+  static const Color navy2 = Color(0xFF18243A);
+  static const Color parchment = Color(0xFFE9D6AA);
+  static const Color parchment2 = Color(0xFFF2E5C7);
+  static const Color brown = Color(0xFF65421F);
+  static const Color gold = Color(0xFFB8893E);
+  static const Color ink = Color(0xFF17243D);
+  static const Color inkSoft = Color(0xFF465064);
+  static const Color red = Color(0xFF7A292D);
+  static const Color green = Color(0xFF4D7258);
 
   @override
   Widget build(BuildContext context) {
@@ -1594,20 +1590,20 @@ class AboutMePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _licenseHeader(context),
+            _topHeader(context),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final bool wide = constraints.maxWidth >= 950;
+                  final wide = constraints.maxWidth >= 950;
 
                   return SingleChildScrollView(
                     padding: EdgeInsets.fromLTRB(
-                      wide ? 16 : 8,
-                      8,
-                      wide ? 16 : 8,
-                      24,
+                      wide ? 18 : 8,
+                      10,
+                      wide ? 18 : 8,
+                      28,
                     ),
-                    child: _licenseDesk(wide),
+                    child: _guildCard(wide),
                   );
                 },
               ),
@@ -1619,21 +1615,30 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // TOP HEADER — DARK TABLE / ADVENTURER PAGE HEADER
+  // TOP HEADER
   // ============================================================
-  Widget _licenseHeader(BuildContext context) {
-    final bool wide = MediaQuery.sizeOf(context).width >= 800;
+
+  Widget _topHeader(BuildContext context) {
+    final wide = MediaQuery.sizeOf(context).width >= 800;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(wide ? 20 : 8, 8, wide ? 20 : 8, 8),
+      padding: EdgeInsets.fromLTRB(
+        wide ? 20 : 8,
+        8,
+        wide ? 20 : 8,
+        8,
+      ),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF0D1119), Color(0xFF171D2A)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF0B1019),
+            Color(0xFF182235),
+          ],
         ),
         border: Border(
-          bottom: BorderSide(color: Color(0xFF4D3B27)),
+          bottom: BorderSide(
+            color: Color(0xFF5B4528),
+          ),
         ),
       ),
       child: Row(
@@ -1646,10 +1651,10 @@ class AboutMePage extends StatelessWidget {
               size: 31,
             ),
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 4),
           Container(
-            width: wide ? 52 : 44,
-            height: wide ? 52 : 44,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: const Color(0x332C3A52),
@@ -1660,7 +1665,7 @@ class AboutMePage extends StatelessWidget {
             child: const Icon(
               Icons.explore_rounded,
               color: Colors.white70,
-              size: 27,
+              size: 26,
             ),
           ),
           const SizedBox(width: 12),
@@ -1676,12 +1681,11 @@ class AboutMePage extends StatelessWidget {
                   fontFamily: 'Georgia',
                 ),
               ),
-              SizedBox(height: 2),
               Text(
-                'Adventurer Guild License',
+                'Adventurer Character Record',
                 style: TextStyle(
                   color: Colors.white70,
-                  fontSize: 13,
+                  fontSize: 12,
                   letterSpacing: 0.8,
                 ),
               ),
@@ -1691,7 +1695,6 @@ class AboutMePage extends StatelessWidget {
           if (wide)
             const Text(
               '“Small progress still counts as progress.”',
-              textAlign: TextAlign.right,
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 14,
@@ -1705,64 +1708,55 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // OUTER DESK / LEATHER FRAME
+  // MAIN GUILD CARD
   // ============================================================
-  Widget _licenseDesk(bool wide) {
+
+  Widget _guildCard(bool wide) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1500),
+        constraints: const BoxConstraints(
+          maxWidth: 1500,
+        ),
         child: Container(
-          padding: EdgeInsets.all(wide ? 13 : 6),
+          padding: EdgeInsets.all(wide ? 12 : 5),
           decoration: BoxDecoration(
-            color: const Color(0xFF1C1A1C),
-            borderRadius: BorderRadius.circular(14),
+            color: const Color(0xFF1B191A),
+            borderRadius: BorderRadius.circular(15),
             border: Border.all(
-              color: const Color(0xFF654A2B),
+              color: const Color(0xFF76572C),
               width: 3,
             ),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black87,
                 blurRadius: 35,
-                offset: Offset(0, 20),
+                offset: Offset(0, 18),
               ),
             ],
           ),
           child: Stack(
             children: [
-              // Dark "desk" decorations.
+              // Semua Positioned di sini langsung berada di dalam Stack.
               Positioned(
                 left: 5,
-                top: 35,
-                child: _deskCompass(),
-              ),
-              Positioned(
-                right: 7,
-                bottom: 30,
-                child: _deskMedallion(),
-              ),
-              Positioned(
-                left: 4,
-                bottom: 4,
-                child: _deskFlower(),
+                top: 30,
+                child: _backgroundCompass(),
               ),
 
-              // Main parchment license.
+              Positioned(
+                right: 12,
+                bottom: 25,
+                child: _backgroundShield(),
+              ),
+
               Container(
                 decoration: BoxDecoration(
                   color: parchment,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(6),
                   border: Border.all(
                     color: gold,
                     width: 3,
                   ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black54,
-                      blurRadius: 18,
-                      offset: Offset(0, 8),
-                    ),
-                  ],
                 ),
                 child: _parchment(wide),
               ),
@@ -1773,13 +1767,10 @@ class AboutMePage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // MAIN PARCHMENT
-  // ============================================================
   Widget _parchment(bool wide) {
     return Stack(
       children: [
-        // Very subtle NEXUS watermark.
+        // Background watermark.
         Positioned.fill(
           child: IgnorePointer(
             child: Opacity(
@@ -1787,65 +1778,61 @@ class AboutMePage extends StatelessWidget {
               child: Image.asset(
                 'assets/nexus_world.png',
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                errorBuilder: (_, __, ___) {
+                  return const SizedBox.shrink();
+                },
               ),
             ),
           ),
         ),
 
-        // Decorative map/castle illustration on right.
-        Positioned(
-          right: 12,
-          top: 90,
-          bottom: 80,
-          width: wide ? 360 : 150,
-          child: IgnorePointer(
-            child: Opacity(
-              opacity: 0.075,
-              child: Icon(
-                Icons.castle_rounded,
-                size: 280,
-                color: brown,
-              ),
-            ),
-          ),
-        ),
-
+        // Main content.
         Padding(
           padding: EdgeInsets.fromLTRB(
-            wide ? 26 : 14,
-            wide ? 20 : 14,
-            wide ? 26 : 14,
-            wide ? 18 : 14,
+            wide ? 28 : 14,
+            wide ? 22 : 15,
+            wide ? 28 : 14,
+            wide ? 22 : 16,
           ),
           child: Column(
             children: [
-              _ornateCorners(),
-              _guildHeader(wide),
-              const SizedBox(height: 12),
-              _goldDivider(),
-              const SizedBox(height: 18),
+              _guildTitle(wide),
 
-              // Identity + portrait.
-              _identitySection(wide),
+              const SizedBox(height: 14),
 
-              const SizedBox(height: 18),
+              _divider(),
 
-              // About + interests.
-              _profileSection(wide),
+              const SizedBox(height: 20),
 
-              const SizedBox(height: 18),
+              _characterHeader(wide),
 
-              // Motto.
+              const SizedBox(height: 22),
+
+              _statusPanel(wide),
+
+              const SizedBox(height: 20),
+
+              _skillPanel(wide),
+
+              const SizedBox(height: 20),
+
+              _aboutAndInterest(wide),
+
+              const SizedBox(height: 20),
+
+              _questLog(wide),
+
+              const SizedBox(height: 20),
+
               _motto(wide),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
-              // Signature + wax seal.
-              _signatureRow(wide),
+              _signature(wide),
 
               const SizedBox(height: 12),
-              _footerMark(),
+
+              _footer(),
             ],
           ),
         ),
@@ -1854,110 +1841,83 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // CORNER ORNAMENTS
+  // GUILD TITLE
   // ============================================================
-  Widget _ornateCorners() {
-    return const Positioned.fill(
-      child: IgnorePointer(
-        child: CustomPaint(
-          painter: _GuildCornerPainter(),
-        ),
-      ),
-    );
-  }
 
-  // ============================================================
-  // GUILD HEADER
-  // ============================================================
-  Widget _guildHeader(bool wide) {
-    final title = const Text(
-      'NEXUS ADVENTURER GUILD',
-      style: TextStyle(
-        color: ink,
-        fontSize: 31,
-        fontWeight: FontWeight.w900,
-        letterSpacing: 1.2,
-        fontFamily: 'Georgia',
-      ),
-    );
-
-    final license = Row(
-      mainAxisSize: MainAxisSize.min,
+  Widget _guildTitle(bool wide) {
+    final title = const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(width: 72, height: 2, color: brown),
-        const SizedBox(width: 10),
-        const Text(
-          'OFFICIAL LICENSE',
+        Text(
+          'NEXUS ADVENTURER GUILD',
           style: TextStyle(
-            color: brown,
-            fontSize: 14,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 3.0,
+            color: ink,
+            fontSize: 31,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
             fontFamily: 'Georgia',
           ),
         ),
-        const SizedBox(width: 10),
-        Container(width: 72, height: 2, color: brown),
+        SizedBox(height: 5),
+        Text(
+          'OFFICIAL CHARACTER RECORD',
+          style: TextStyle(
+            color: brown,
+            fontSize: 12,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 3,
+            fontFamily: 'Georgia',
+          ),
+        ),
       ],
     );
 
-    final heading = wide
-        ? Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _compassSeal(),
-              const SizedBox(width: 18),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    title,
-                    const SizedBox(height: 6),
-                    license,
-                  ],
-                ),
-              ),
-              _idNumber(),
-            ],
-          )
-        : Column(
-            children: [
-              _compassSeal(),
-              const SizedBox(height: 10),
-              FittedBox(child: title),
-              const SizedBox(height: 6),
-              FittedBox(child: license),
-              const SizedBox(height: 10),
-              _idNumber(),
-            ],
-          );
+    if (!wide) {
+      return Column(
+        children: [
+          _seal(),
+          const SizedBox(height: 10),
+          FittedBox(child: title),
+          const SizedBox(height: 8),
+          _idBox(),
+        ],
+      );
+    }
 
-    return heading;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _seal(),
+        const SizedBox(width: 18),
+        Expanded(child: title),
+        _idBox(),
+      ],
+    );
   }
 
-  Widget _compassSeal() {
+  Widget _seal() {
     return Container(
       width: 76,
       height: 76,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: const Color(0x19FFFFFF),
+        color: const Color(0x20FFFFFF),
         border: Border.all(
           color: gold,
-          width: 2.5,
+          width: 3,
         ),
       ),
       child: const Center(
         child: Icon(
           Icons.explore_rounded,
           color: brown,
-          size: 48,
+          size: 46,
         ),
       ),
     );
   }
 
-  Widget _idNumber() {
+  Widget _idBox() {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -1966,68 +1926,103 @@ class AboutMePage extends StatelessWidget {
           style: TextStyle(
             color: brown,
             fontSize: 14,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w900,
             letterSpacing: 1,
             fontFamily: 'Georgia',
           ),
         ),
-        SizedBox(height: 5),
+        SizedBox(height: 4),
         Text(
-          'ADVENTURER LICENSE\nNEXUS WORLD',
+          'NEXUS WORLD\nADVENTURER RECORD',
           textAlign: TextAlign.right,
           style: TextStyle(
             color: brown,
-            fontSize: 9,
-            letterSpacing: 1.5,
+            fontSize: 8,
+            letterSpacing: 1.4,
             height: 1.4,
-            fontFamily: 'Georgia',
           ),
         ),
       ],
     );
   }
 
-  Widget _goldDivider() {
+  Widget _divider() {
     return Row(
       children: [
-        Expanded(child: Container(height: 1.5, color: gold)),
+        Expanded(
+          child: Container(
+            height: 1.5,
+            color: gold,
+          ),
+        ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             '✦',
             style: TextStyle(
               color: brown,
-              fontSize: 22,
+              fontSize: 21,
             ),
           ),
         ),
-        Expanded(child: Container(height: 1.5, color: gold)),
+        Expanded(
+          child: Container(
+            height: 1.5,
+            color: gold,
+          ),
+        ),
       ],
     );
   }
 
   // ============================================================
-  // IDENTITY SECTION
+  // CHARACTER HEADER
   // ============================================================
-  Widget _identitySection(bool wide) {
+
+  Widget _characterHeader(bool wide) {
     final portrait = _portrait(wide);
 
     final info = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _dataRow(Icons.person_rounded, 'Nama', 'Kelvin', wide),
-        _dataRow(
-          Icons.cake_rounded,
-          'Tempat & Tanggal Lahir',
-          '17 Maret 2006, Madiun',
-          wide,
+        const Text(
+          'ADVENTURER PROFILE',
+          style: TextStyle(
+            color: brown,
+            fontSize: 12,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 2.5,
+          ),
         ),
-        _dataRow(Icons.badge_rounded, 'NIM', '25051204439', wide),
-        _dataRow(
-          Icons.school_rounded,
-          'Kelas',
-          'Informatika 2025 H',
-          wide,
+        const SizedBox(height: 5),
+        const Text(
+          'KELVIN',
+          style: TextStyle(
+            color: ink,
+            fontSize: 34,
+            fontWeight: FontWeight.w900,
+            fontFamily: 'Georgia',
+          ),
         ),
+        const SizedBox(height: 2),
+        const Text(
+          'CODE ADVENTURER',
+          style: TextStyle(
+            color: brown,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 2,
+          ),
+        ),
+        const SizedBox(height: 18),
+        _infoRow(Icons.cake_rounded, 'Birth',
+            '17 Maret 2006, Madiun'),
+        _infoRow(Icons.school_rounded, 'Class',
+            'Informatika 2025 H'),
+        _infoRow(Icons.badge_rounded, 'Guild ID',
+            '25051204439'),
+        _infoRow(Icons.location_on_rounded, 'Origin',
+            'Madiun, East Java'),
       ],
     );
 
@@ -2035,7 +2030,7 @@ class AboutMePage extends StatelessWidget {
       return Column(
         children: [
           portrait,
-          const SizedBox(height: 14),
+          const SizedBox(height: 18),
           info,
         ],
       );
@@ -2052,14 +2047,17 @@ class AboutMePage extends StatelessWidget {
   }
 
   Widget _portrait(bool wide) {
+    final width = wide ? 270.0 : 215.0;
+    final height = wide ? 345.0 : 275.0;
+
     return Column(
       children: [
         Container(
-          width: wide ? 285 : 220,
-          height: wide ? 365 : 290,
+          width: width,
+          height: height,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: parchmentDark,
+            color: const Color(0xFFD0B681),
             border: Border.all(
               color: brown,
               width: 3,
@@ -2072,21 +2070,29 @@ class AboutMePage extends StatelessWidget {
                   'assets/profile_kelvin.jpeg',
                   fit: BoxFit.cover,
                   alignment: const Alignment(0, -0.03),
-                  errorBuilder: (_, __, ___) => const Center(
-                    child: Icon(
-                      Icons.person_rounded,
-                      size: 80,
-                      color: brown,
-                    ),
-                  ),
+                  errorBuilder: (_, __, ___) {
+                    return const Center(
+                      child: Icon(
+                        Icons.person_rounded,
+                        size: 80,
+                        color: brown,
+                      ),
+                    );
+                  },
                 ),
               ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: CustomPaint(
-                    painter: _PhotoOrnamentPainter(),
-                  ),
-                ),
+
+
+              Positioned(
+                left: 8,
+                top: 8,
+                child: _photoTag('NEXUS'),
+              ),
+
+              Positioned(
+                right: 8,
+                bottom: 8,
+                child: _photoTag('ID 25051204439'),
               ),
             ],
           ),
@@ -2098,7 +2104,6 @@ class AboutMePage extends StatelessWidget {
           style: TextStyle(
             color: brown,
             fontSize: 17,
-            height: 1.15,
             fontStyle: FontStyle.italic,
             fontFamily: 'Georgia',
           ),
@@ -2107,21 +2112,38 @@ class AboutMePage extends StatelessWidget {
     );
   }
 
-  Widget _dataRow(
+  Widget _photoTag(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 7,
+        vertical: 4,
+      ),
+      color: const Color(0xCC17243D),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 7,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _infoRow(
     IconData icon,
     String label,
     String value,
-    bool wide,
   ) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: wide ? 12 : 10,
+      padding: const EdgeInsets.symmetric(
+        vertical: 9,
       ),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: Color(0x55765021),
-            width: 1,
           ),
         ),
       ),
@@ -2130,19 +2152,18 @@ class AboutMePage extends StatelessWidget {
           Icon(
             icon,
             color: brown,
-            size: wide ? 23 : 19,
+            size: 20,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           SizedBox(
-            width: wide ? 250 : 145,
+            width: 90,
             child: Text(
               label.toUpperCase(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: brown,
-                fontSize: wide ? 14 : 11,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.7,
-                fontFamily: 'Georgia',
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1,
               ),
             ),
           ),
@@ -2150,16 +2171,16 @@ class AboutMePage extends StatelessWidget {
             ':',
             style: TextStyle(
               color: brown,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 color: ink,
-                fontSize: wide ? 18 : 14,
+                fontSize: 15,
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Georgia',
               ),
@@ -2171,123 +2192,168 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // ABOUT + INTERESTS
+  // STATUS
   // ============================================================
-  Widget _profileSection(bool wide) {
-    final about = _paperSection(
-      icon: Icons.auto_stories_rounded,
-      title: 'ABOUT ME',
-      child: const Text(
-        'Seorang mahasiswa yang sedang menjalani perjalanan untuk belajar, '
-        'berkembang, dan mencoba berbagai hal baru. Saya percaya bahwa '
-        'setiap pengalaman, sekecil apa pun, merupakan bagian dari proses '
-        'untuk menjadi versi diri yang lebih baik.',
-        style: TextStyle(
-          color: inkSoft,
-          fontSize: 16,
-          height: 1.48,
-          fontFamily: 'Georgia',
-        ),
-      ),
-    );
 
-    final interests = _paperSection(
-      icon: Icons.auto_awesome_rounded,
-      title: 'INTERESTS',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _interest(Icons.sports_esports_rounded, 'Main Game'),
-          const SizedBox(height: 15),
-          _interest(Icons.two_wheeler_rounded, 'Modifikasi Otomotif'),
-        ],
-      ),
-    );
-
-    if (!wide) {
-      return Column(
-        children: [
-          about,
-          const SizedBox(height: 14),
-          interests,
-        ],
-      );
-    }
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(flex: 6, child: about),
-        const SizedBox(width: 18),
-        Expanded(flex: 4, child: interests),
-      ],
+  Widget _statusPanel(bool wide) {
+    return _panel(
+      title: 'CHARACTER STATUS',
+      icon: Icons.bar_chart_rounded,
+      child: wide
+          ? Row(
+              children: [
+                Expanded(child: _statusItem(
+                  'LEVEL',
+                  '20',
+                  Icons.stars_rounded,
+                )),
+                Expanded(child: _statusItem(
+                  'RANK',
+                  'F',
+                  Icons.shield_rounded,
+                )),
+                Expanded(child: _statusItem(
+                  'EXP',
+                  '62%',
+                  Icons.auto_awesome_rounded,
+                )),
+              ],
+            )
+          : Column(
+              children: [
+                _statusItem(
+                  'LEVEL',
+                  '20',
+                  Icons.stars_rounded,
+                ),
+                const SizedBox(height: 10),
+                _statusItem(
+                  'RANK',
+                  'F',
+                  Icons.shield_rounded,
+                ),
+                const SizedBox(height: 10),
+                _statusItem(
+                  'EXP',
+                  '62%',
+                  Icons.auto_awesome_rounded,
+                ),
+              ],
+            ),
     );
   }
 
-  Widget _paperSection({
-    required IconData icon,
-    required String title,
-    required Widget child,
-  }) {
+  Widget _statusItem(
+    String name,
+    String value,
+    IconData icon,
+  ) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 5,
+      ),
+      padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        color: const Color(0x12FFFFFF),
+        color: const Color(0x16000000),
         border: Border.all(
-          color: const Color(0x88765021),
-          width: 1.4,
+          color: const Color(0x55765021),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Row(
+          Icon(
+            icon,
+            color: brown,
+            size: 30,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: brown, size: 28),
-              const SizedBox(width: 10),
               Text(
-                title,
+                name,
                 style: const TextStyle(
-                  color: ink,
-                  fontSize: 21,
+                  color: brown,
+                  fontSize: 9,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 0.7,
-                  fontFamily: 'Georgia',
+                  letterSpacing: 1.5,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Container(
-                  height: 1.4,
-                  color: const Color(0x88765021),
+              Text(
+                value,
+                style: const TextStyle(
+                  color: ink,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Georgia',
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 13),
-          child,
         ],
       ),
     );
   }
 
-  Widget _interest(IconData icon, String text) {
+  // ============================================================
+  // SKILLS
+  // ============================================================
+
+  Widget _skillPanel(bool wide) {
+    return _panel(
+      title: 'ADVENTURER SKILLS',
+      icon: Icons.auto_awesome_rounded,
+      child: Column(
+        children: [
+          _skillBar('Programming', 0.72),
+          const SizedBox(height: 13),
+          _skillBar('Problem Solving', 0.64),
+          const SizedBox(height: 13),
+          _skillBar('Creativity', 0.70),
+          const SizedBox(height: 13),
+          _skillBar('Learning', 0.90),
+        ],
+      ),
+    );
+  }
+
+  Widget _skillBar(String name, double value) {
     return Row(
       children: [
-        Icon(
-          icon,
-          color: ink,
-          size: 39,
-        ),
-        const SizedBox(width: 15),
-        Expanded(
+        SizedBox(
+          width: 125,
           child: Text(
-            text,
+            name,
             style: const TextStyle(
               color: inkSoft,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Georgia',
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: LinearProgressIndicator(
+              value: value,
+              minHeight: 9,
+              backgroundColor: const Color(0x332F3542),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                gold,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        SizedBox(
+          width: 35,
+          child: Text(
+            '${(value * 100).round()}',
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              color: brown,
+              fontSize: 11,
+              fontWeight: FontWeight.w900,
             ),
           ),
         ),
@@ -2296,67 +2362,278 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // MOTTO — BIG LICENSE BOX
+  // ABOUT + INTEREST
   // ============================================================
+
+  Widget _aboutAndInterest(bool wide) {
+    final about = _panel(
+      title: 'ABOUT ME',
+      icon: Icons.auto_stories_rounded,
+      child: const Text(
+        'Seorang mahasiswa yang sedang menjalani perjalanan '
+        'untuk belajar, berkembang, dan mencoba berbagai hal baru. '
+        'Saya percaya bahwa setiap pengalaman, sekecil apa pun, '
+        'merupakan bagian dari proses untuk menjadi versi diri '
+        'yang lebih baik.',
+        style: TextStyle(
+          color: inkSoft,
+          fontSize: 15,
+          height: 1.55,
+          fontFamily: 'Georgia',
+        ),
+      ),
+    );
+
+    final interest = _panel(
+      title: 'SPECIALIZATION',
+      icon: Icons.extension_rounded,
+      child: Column(
+        children: [
+          _interestItem(
+            Icons.code_rounded,
+            'Programming',
+          ),
+          const SizedBox(height: 13),
+          _interestItem(
+            Icons.sports_esports_rounded,
+            'Gaming',
+          ),
+          const SizedBox(height: 13),
+          _interestItem(
+            Icons.two_wheeler_rounded,
+            'Automotive',
+          ),
+        ],
+      ),
+    );
+
+    if (!wide) {
+      return Column(
+        children: [
+          about,
+          const SizedBox(height: 15),
+          interest,
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 6,
+          child: about,
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          flex: 4,
+          child: interest,
+        ),
+      ],
+    );
+  }
+
+  Widget _interestItem(
+    IconData icon,
+    String text,
+  ) {
+    return Row(
+      children: [
+        Container(
+          width: 43,
+          height: 43,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0x16000000),
+            border: Border.all(
+              color: const Color(0x55765021),
+            ),
+          ),
+          child: Icon(
+            icon,
+            color: brown,
+            size: 23,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          text,
+          style: const TextStyle(
+            color: ink,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            fontFamily: 'Georgia',
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // QUEST LOG
+  // ============================================================
+
+  Widget _questLog(bool wide) {
+    return _panel(
+      title: 'QUEST LOG',
+      icon: Icons.menu_book_rounded,
+      child: Column(
+        children: [
+          _quest(
+            '01',
+            'Learn Programming',
+            'ACTIVE',
+            green,
+          ),
+          const SizedBox(height: 9),
+          _quest(
+            '02',
+            'Build NEXUS LIFE RPG',
+            'IN PROGRESS',
+            gold,
+          ),
+          const SizedBox(height: 9),
+          _quest(
+            '03',
+            'Explore Automotive',
+            'ACTIVE',
+            green,
+          ),
+          const SizedBox(height: 9),
+          _quest(
+            '04',
+            'Become Better Than Yesterday',
+            'ONGOING',
+            brown,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _quest(
+    String number,
+    String title,
+    String status,
+    Color statusColor,
+  ) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 11,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0x12000000),
+        border: Border.all(
+          color: const Color(0x44765021),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 35,
+            height: 35,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: brown,
+              ),
+            ),
+            child: Text(
+              number,
+              style: const TextStyle(
+                color: brown,
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: ink,
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                fontFamily: 'Georgia',
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 4,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: statusColor,
+              ),
+            ),
+            child: Text(
+              status,
+              style: TextStyle(
+                color: statusColor,
+                fontSize: 8,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // MOTTO
+  // ============================================================
+
   Widget _motto(bool wide) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(
-        wide ? 24 : 15,
-        wide ? 18 : 14,
-        wide ? 24 : 15,
-        wide ? 18 : 14,
+      padding: EdgeInsets.all(
+        wide ? 22 : 16,
       ),
       decoration: BoxDecoration(
-        color: const Color(0x12FFFFFF),
+        color: const Color(0x18000000),
         border: Border.all(
           color: const Color(0x99765021),
-          width: 1.8,
+          width: 1.5,
         ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
-            Icons.explore_rounded,
+            Icons.format_quote_rounded,
             color: brown,
-            size: 48,
+            size: 42,
           ),
-          const SizedBox(width: 15),
-          Expanded(
+          const SizedBox(width: 13),
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      "ADVENTURER'S MOTTO",
-                      style: TextStyle(
-                        color: ink,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
-                        fontFamily: 'Georgia',
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Container(
-                        height: 1.4,
-                        color: const Color(0x88765021),
-                      ),
-                    ),
-                  ],
+                Text(
+                  'ADVENTURER\'S MOTTO',
+                  style: TextStyle(
+                    color: brown,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2,
+                  ),
                 ),
-                const SizedBox(height: 9),
-                const Text(
+                SizedBox(height: 7),
+                Text(
                   '"Aku mungkin belum menjadi versi terbaik dari diriku, '
                   'tapi aku bangga karena aku terus mencoba menjadi sedikit '
                   'lebih baik dari kemarin."',
                   style: TextStyle(
                     color: inkSoft,
-                    fontSize: 15,
-                    height: 1.5,
+                    fontSize: 14,
+                    height: 1.55,
                     fontStyle: FontStyle.italic,
                     fontFamily: 'Georgia',
                   ),
@@ -2370,13 +2647,14 @@ class AboutMePage extends StatelessWidget {
   }
 
   // ============================================================
-  // SIGNATURE + WAX SEAL
+  // SIGNATURE
   // ============================================================
-  Widget _signatureRow(bool wide) {
+
+  Widget _signature(bool wide) {
     if (!wide) {
       return Column(
         children: [
-          _signature(),
+          _signatureName(),
           const SizedBox(height: 14),
           _waxSeal(),
         ],
@@ -2388,38 +2666,37 @@ class AboutMePage extends StatelessWidget {
       children: [
         const Expanded(
           child: Text(
-            'NEXUS WORLD  •  OFFICIAL ADVENTURER RECORD',
+            'NEXUS WORLD • OFFICIAL ADVENTURER RECORD',
             style: TextStyle(
               color: brown,
-              fontSize: 9,
-              fontWeight: FontWeight.w800,
+              fontSize: 8,
+              fontWeight: FontWeight.w900,
               letterSpacing: 1.5,
-              fontFamily: 'Georgia',
             ),
           ),
         ),
-        _signature(),
+        _signatureName(),
         const SizedBox(width: 25),
         _waxSeal(),
       ],
     );
   }
 
-  Widget _signature() {
+  Widget _signatureName() {
     return Column(
       children: [
         const Text(
           'KELVIN',
           style: TextStyle(
             color: ink,
-            fontSize: 32,
+            fontSize: 30,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.italic,
             fontFamily: 'Georgia',
           ),
         ),
         Container(
-          width: 155,
+          width: 150,
           height: 1.5,
           color: brown,
         ),
@@ -2428,7 +2705,7 @@ class AboutMePage extends StatelessWidget {
           'SIGNATURE',
           style: TextStyle(
             color: brown,
-            fontSize: 9,
+            fontSize: 8,
             letterSpacing: 2.5,
           ),
         ),
@@ -2438,64 +2715,102 @@ class AboutMePage extends StatelessWidget {
 
   Widget _waxSeal() {
     return Container(
-      width: 82,
-      height: 82,
+      width: 76,
+      height: 76,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: wax,
+        color: red,
         border: Border.all(
-          color: const Color(0xFF9A4A45),
+          color: const Color(0xFFB45A55),
           width: 4,
         ),
         boxShadow: const [
           BoxShadow(
             color: Colors.black38,
-            blurRadius: 10,
-            offset: Offset(3, 5),
+            blurRadius: 9,
+            offset: Offset(3, 4),
           ),
         ],
       ),
-      child: const Center(
-        child: Icon(
-          Icons.explore_rounded,
-          color: Color(0xFFE0B46B),
-          size: 42,
-        ),
+      child: const Icon(
+        Icons.explore_rounded,
+        color: Color(0xFFE0B46B),
+        size: 39,
       ),
     );
   }
 
-  Widget _footerMark() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(width: 65, height: 1, color: gold),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            '✦  SAME STEPS  •  BRIGHTER DAYS  ✦',
-            style: TextStyle(
-              color: brown,
-              fontSize: 8,
-              letterSpacing: 2.1,
-              fontFamily: 'Georgia',
-            ),
-          ),
+  // ============================================================
+  // GENERIC PANEL
+  // ============================================================
+
+  Widget _panel({
+    required String title,
+    required IconData icon,
+    required Widget child,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(
+        17,
+        15,
+        17,
+        17,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0x10000000),
+        border: Border.all(
+          color: const Color(0x77765021),
+          width: 1.3,
         ),
-        Container(width: 65, height: 1, color: gold),
-      ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                color: brown,
+                size: 25,
+              ),
+              const SizedBox(width: 9),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: ink,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.8,
+                  fontFamily: 'Georgia',
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(
+                  height: 1.2,
+                  color: const Color(0x77765021),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          child,
+        ],
+      ),
     );
   }
 
   // ============================================================
   // BACKGROUND DECORATIONS
   // ============================================================
-  Widget _deskCompass() {
+
+  Widget _backgroundCompass() {
     return Opacity(
-      opacity: 0.5,
+      opacity: 0.45,
       child: Container(
         width: 170,
-        height: 250,
+        height: 240,
         decoration: BoxDecoration(
           color: const Color(0x221B2638),
           borderRadius: BorderRadius.circular(70),
@@ -2507,17 +2822,17 @@ class AboutMePage extends StatelessWidget {
           child: Icon(
             Icons.explore_rounded,
             color: Color(0x775B6A7D),
-            size: 115,
+            size: 110,
           ),
         ),
       ),
     );
   }
 
-  Widget _deskMedallion() {
+  Widget _backgroundShield() {
     return Container(
-      width: 120,
-      height: 120,
+      width: 115,
+      height: 115,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: const Color(0xFF202837),
@@ -2530,161 +2845,39 @@ class AboutMePage extends StatelessWidget {
         child: Icon(
           Icons.shield_rounded,
           color: Color(0xFF92703C),
-          size: 62,
+          size: 60,
         ),
       ),
     );
   }
 
-  Widget _deskFlower() {
-    return SizedBox(
-      width: 130,
-      height: 95,
-      child: CustomPaint(
-        painter: _FlowerPainter(),
-      ),
+  Widget _footer() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 55,
+          height: 1,
+          color: gold,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            '✦  SAME STEPS • BRIGHTER DAYS  ✦',
+            style: TextStyle(
+              color: brown,
+              fontSize: 7,
+              letterSpacing: 1.8,
+              fontFamily: 'Georgia',
+            ),
+          ),
+        ),
+        Container(
+          width: 55,
+          height: 1,
+          color: gold,
+        ),
+      ],
     );
   }
-}
-
-// ============================================================
-// ORNAMENT PAINTERS
-// ============================================================
-
-class _GuildCornerPainter extends CustomPainter {
-  const _GuildCornerPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final p = Paint()
-      ..color = const Color(0x886F4C25)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-
-    void corner(double x, double y, bool flipX, bool flipY) {
-      canvas.save();
-      canvas.translate(x, y);
-      canvas.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-
-      final path = Path()
-        ..moveTo(0, 38)
-        ..lineTo(0, 0)
-        ..lineTo(38, 0)
-        ..moveTo(7, 27)
-        ..lineTo(7, 7)
-        ..lineTo(27, 7)
-        ..moveTo(13, 19)
-        ..lineTo(13, 13)
-        ..lineTo(19, 13);
-
-      canvas.drawPath(path, p);
-      canvas.drawCircle(const Offset(5, 5), 2.5, p);
-      canvas.restore();
-    }
-
-    corner(5, 5, false, false);
-    corner(size.width - 5, 5, true, false);
-    corner(5, size.height - 5, false, true);
-    corner(size.width - 5, size.height - 5, true, true);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class _PhotoOrnamentPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final p = Paint()
-      ..color = const Color(0xFFB7893F)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.7;
-
-    const d = 30.0;
-
-    final topLeft = Path()
-      ..moveTo(0, d)
-      ..lineTo(0, 0)
-      ..lineTo(d, 0)
-      ..moveTo(7, 22)
-      ..lineTo(7, 7)
-      ..lineTo(22, 7);
-
-    final topRight = Path()
-      ..moveTo(size.width, d)
-      ..lineTo(size.width, 0)
-      ..lineTo(size.width - d, 0)
-      ..moveTo(size.width - 7, 22)
-      ..lineTo(size.width - 7, 7)
-      ..lineTo(size.width - 22, 7);
-
-    final bottomLeft = Path()
-      ..moveTo(0, size.height - d)
-      ..lineTo(0, size.height)
-      ..lineTo(d, size.height)
-      ..moveTo(7, size.height - 22)
-      ..lineTo(7, size.height - 7)
-      ..lineTo(22, size.height - 7);
-
-    final bottomRight = Path()
-      ..moveTo(size.width, size.height - d)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width - d, size.height)
-      ..moveTo(size.width - 7, size.height - 22)
-      ..lineTo(size.width - 7, size.height - 7)
-      ..lineTo(size.width - 22, size.height - 7);
-
-    canvas.drawPath(topLeft, p);
-    canvas.drawPath(topRight, p);
-    canvas.drawPath(bottomLeft, p);
-    canvas.drawPath(bottomRight, p);
-
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height),
-      14,
-      p,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class _FlowerPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final p = Paint()
-      ..color = const Color(0x557A6348)
-      ..style = PaintingStyle.fill;
-
-    final center = Offset(size.width * 0.35, size.height * 0.65);
-
-    for (int i = 0; i < 5; i++) {
-      final angle = i * 1.2566;
-      final petal = Offset(
-        center.dx + 25 * math.cos(angle),
-        center.dy + 25 * math.sin(angle),
-      );
-      canvas.drawCircle(petal, 15, p);
-    }
-
-    canvas.drawCircle(
-      center,
-      12,
-      Paint()..color = const Color(0xFFB08A4B),
-    );
-
-    final stem = Paint()
-      ..color = const Color(0x556F754C)
-      ..strokeWidth = 3;
-
-    canvas.drawLine(
-      Offset(center.dx, center.dy + 8),
-      Offset(center.dx - 12, size.height),
-      stem,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
