@@ -24,3 +24,5 @@ flutter:
     - assets/nexus_world.png
     - assets/home_fantasy.png
     - assets/profile_kelvin.jpeg
+    - assets/products/
+    - assets/login/
