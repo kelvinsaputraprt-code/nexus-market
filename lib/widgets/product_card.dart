@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../pages/product_detail_page.dart';
+import '../pages/product_detail_page_backup.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -37,29 +37,14 @@ class ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // =========================
               // PRODUCT IMAGE
-              // =========================
               SizedBox(
                 height: 165,
                 width: double.infinity,
-                child: Image.network(
+                child: Image.asset(
                   product.imageUrl,
                   fit: BoxFit.cover,
-
-                  loadingBuilder:
-                      (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-
-                  errorBuilder:
-                      (context, error, stackTrace) {
+                  errorBuilder: (context, error, stackTrace) {
                     return Container(
                       color: Colors.grey.shade200,
                       child: const Center(
@@ -74,15 +59,12 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
 
-              // =========================
               // PRODUCT INFORMATION
-              // =========================
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // PRODUCT NAME
                       Text(
@@ -106,16 +88,13 @@ class ProductCard extends StatelessWidget {
                             color: Colors.amber,
                           ),
                           const SizedBox(width: 4),
-
                           Text(
                             product.rating.toString(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-
                           const SizedBox(width: 8),
-
                           Expanded(
                             child: Text(
                               '${product.sold} terjual',
