@@ -1,17 +1,13 @@
-# nexus_flutter
+# NEXUS MARKET
 
-A new Flutter project.
+Aplikasi e-commerce berbasis Flutter yang menyediakan berbagai produk dari kategori gaming, automotive, technology, fashion, accessories, dan home & living.
 
-## Getting Started
+## 🌐 Live Demo
 
-This project is a starting point for a Flutter application.
+**Klik link berikut untuk mencoba aplikasi NEXUS MARKET:**
 
-A few resources to get you started if this is your first Flutter project:
+[🚀 Buka NEXUS MARKET](https://kelvinsaputraprt-code.github.io/nexus-market/)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## 💻 Source Code
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Source code aplikasi ini tersedia di repository GitHub ini.
