@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/cart_manager.dart';
 import '../models/product.dart';
-import 'checkout_page.dart';
+import 'checkout_page_backup.dart';
 
 class CartPage extends StatelessWidget {
   final List<Product> cartItems;
@@ -94,7 +94,7 @@ class CartPage extends StatelessWidget {
                                     child: SizedBox(
                                       width: 90,
                                       height: 90,
-                                      child: Image.network(
+                                      child: Image.asset(
                                         product.imageUrl,
                                         fit: BoxFit.cover,
                                         errorBuilder:
